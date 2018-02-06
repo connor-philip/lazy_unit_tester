@@ -1,0 +1,73 @@
+import test_module
+
+
+def function_for_test_case1(testRequiredParam):
+    print "function_for_test_case1"
+    print testRequiredParam
+
+
+def function_for_test_case2(param1,param2):
+    return None
+
+
+def function_for_test_case3():
+    test_module.test()
+
+
+def function_for_test_case4():
+    # contains comment
+    # function_for_test_case4
+    pass
+
+
+def functionfortestcase(param1, param2):
+    pass
+
+
+def functionfortestcase2():
+    pass
+
+
+def FunctionForTestCase():
+    pass
+
+
+def FunctionForTestCase2():
+    pass
+
+
+def functionForTestCase():
+    pass
+
+
+def functionForTestCase2():
+    pass
+
+def spacebeforebrackets ():
+    pass
+
+
+def notProperSyntax[]:
+    pass
+
+
+def notProperSyntax();
+    pass
+
+
+defnospaces():
+    pass
+
+
+def  toomanyspaces():
+    pass
+
+
+def_underscore_no_spaces():
+    pass
+
+
+
+randomlongstringjustforthesakeoftestingandnootherpurposesotherthanbeingusedforunittest
+
+
