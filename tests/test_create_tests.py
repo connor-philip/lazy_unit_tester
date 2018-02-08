@@ -69,30 +69,6 @@ class TestConvertFunctionNameToUnittestClassName(unittest.TestCase):
         self.assertEqual(returnedValue, self.expectedReturn)
 
 
-class TestCheckForExistingTestFile(unittest.TestCase):
-
-    def setUp(self):
-        open("/home/vagrant/CPTS/tests/create_tests.txt", "a").close()
-
-    def tearDown(self):
-        os.remove("/home/vagrant/CPTS/tests/create_tests.txt")
-
-    def test_function_returns_true_if_file_already_exists(self):
-        returnedValue = create_tests.check_for_existing_unittest_file("/home/vagrant/CPTS/create_tests.py")
-
-        self.assertEqual(returnedValue, True)
-
-    def test_function_returns_false_if_file_does_not_exists(self):
-        returnedValue = create_tests.check_for_existing_unittest_file("/home/vagrant/CPTS/unknown.py")
-
-        self.assertEqual(returnedValue, False)
-
-    def test_function_only_looks_for_py_files(self):
-        returnedValue = create_tests.check_for_existing_unittest_file("/home/vagrant/CPTS/create_tests.txt")
-
-        self.assertEqual(returnedValue, False)
-
-
 class TestCompareFunctionsInExistingTestFile(unittest.TestCase):
 
     def setUp(self):
