@@ -7,7 +7,7 @@ def find_functions_in_file(filePath):
 
     with open(filePath, "r") as openFileObj:
         for line in openFileObj:
-            functionMatch = re.search(r"(?<=def\s)\w+(?=\s?\((.+)?\):)", line)
+            functionMatch = re.search(r"(?<=^def\s)\w+(?=\s?\((.+)?\):)", line)
             if functionMatch is not None:
                 functionList.append(functionMatch.group(0))
 
