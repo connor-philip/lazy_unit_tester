@@ -30,14 +30,12 @@ def convert_function_name_to_unittest_class_name(functionList):
     return classList
 
 
-def check_for_existing_unittest_file(filePath):
-
+def construct_unittest_filepath_from_users_filepath(filePath):
     def findMatchGroup(matchobj):
         return "%stests%stest_%s" % (matchobj.group(1), matchobj.group(1), matchobj.group(2))
 
     unittestFilepath = re.sub(r"(\/|\\)([^\/|\\]+\.py$)", findMatchGroup, filePath)
-
-    return os.path.exists(unittestFilepath)
+    return unittestFilepath
 
 
 def compare_functions_in_existing_test_file(filePath):
