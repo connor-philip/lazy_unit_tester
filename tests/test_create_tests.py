@@ -69,6 +69,27 @@ class TestConvertFunctionNameToUnittestClassName(unittest.TestCase):
         self.assertEqual(returnedValue, self.expectedReturn)
 
 
+class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_function_returns_unittest_filepath_from_valid_input(self):
+        pass
+
+    def test_function_returns_false_from_invalid_input(self):
+        pass
+
+    def test_function_only_accepts_py_files(self):
+        pass
+
+    def test_function_adds_correct_slashes_for_filepath(self):
+        pass
+
+
 class TestCompareFunctionsInExistingTestFile(unittest.TestCase):
 
     def setUp(self):
