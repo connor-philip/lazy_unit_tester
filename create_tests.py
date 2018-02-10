@@ -54,12 +54,36 @@ def filter_existing_classes_from_test_file(filePath, classList):
     return newClassList
 
 
-def write_new_functions_to_file(filePath, classList):
-    with open(filePath, "a") as unitTestFile:
+def write_new_functions_to_file(filePath, classList, existingFile):
+    userFileNameImport = re.search(r"tests[\\|\/]test_(.+)\.py", filePath).group(1)
+    insertIndex = 0
+
+    with open(filePath, "a+") as unitTestFile:
+        bodyString = unitTestFile.readlines()
+
+        if not existingFile:
+            bodyString.insert(insertIndex, "import unittest{0}".format("\n"))
+            bodyString.insert(insertIndex + 1, "import {0}{1}{1}{1}".format(userFileNameImport, "\n"))
+
+        if existingFile:
+            for line in bodyString:
+                if "if __name__ == \"__main__\":" in line:
+                    insertIndex = bodyString.index(line)
+        else:
+            insertIndex = 2
+
         for className in classList:
-            classNameString = "class {}(unittest.TestCase):\n\n".format(className)
-            setUpString = "    def setUp(self):\n        pass\n\n"
-            tearDownString = "    def tearDown(self):\n        pass\n\n"
-            unitTestFile.write(classNameString)
-            unitTestFile.write(setUpString)
-            unitTestFile.write(tearDownString)
+            bodyString.insert(insertIndex, "class {0}(unittest.TestCase):{1}{1}".format(className, "\n"))
+            bodyString.insert(insertIndex + 1, "{0}def setUp(self):{1}{0}{0}pass{1}{1}".format("    ", "\n"))
+            bodyString.insert(insertIndex + 2, "{0}def tearDown(self):{1}{0}{0}pass{1}{1}{1}".format("    ", "\n"))
+            insertIndex += 3
+
+        if not existingFile:
+            bodyString.insert(insertIndex + 1, "if __name__ == \"__main__\":{0}".format("\n"))
+            bodyString.insert(insertIndex + 2, "{0}unittest.main(){1}".format("    ", "\n"))
+
+        unitTestFile.close()
+
+    with open(filePath, "w") as unitTestFile:
+        unitTestFile.writelines(bodyString)
+        unitTestFile.close()
