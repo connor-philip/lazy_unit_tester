@@ -54,5 +54,12 @@ def filter_existing_classes_from_test_file(filePath, classList):
     return newClassList
 
 
-def write_new_functions_to_file():
-    pass
+def write_new_functions_to_file(filePath, classList):
+    with open(filePath, "a") as unitTestFile:
+        for className in classList:
+            classNameString = "class %s(unittest.TestCase):\n\n" % (className)
+            setUpString = "    def setUp(self):\n        pass\n\n"
+            tearDownString = "    def tearDown(self):\n        pass\n\n"
+            unitTestFile.write(classNameString)
+            unitTestFile.write(setUpString)
+            unitTestFile.write(tearDownString)
