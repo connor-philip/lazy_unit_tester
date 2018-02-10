@@ -5,6 +5,14 @@ import os
 CURRENTDIRPATH = os.path.dirname(os.path.realpath(__file__))
 
 
+def yield_input_expected_output_match(function, inputList, expectedOutputList):
+    for index, item in enumerate(inputList):
+        if function(item) == expectedOutputList[index]:
+            yield (True, "")
+        else:
+            yield (False, "return of %s(%s) did not match %s" % (function.__name__, item, expectedOutputList[index]))
+
+
 class TestFindFunctionsInFile(unittest.TestCase):  # Differet types of invalid function names are listed in functions_test_data.txt
 
     def setUp(self):
@@ -26,8 +34,7 @@ class TestFindFunctionsInFile(unittest.TestCase):  # Differet types of invalid f
             "FunctionForTestCase2",
             "functionForTestCase",
             "functionForTestCase2",
-            "spacebeforebrackets"
-        ]
+            "spacebeforebrackets"]
 
         self.assertEqual(self.returnedValue, expectedReturn)
 
@@ -46,8 +53,7 @@ class TestConvertFunctionNameToUnittestClassName(unittest.TestCase):
             "FunctionForTestCase2",
             "functionForTestCase",
             "functionForTestCase2",
-            "spacebeforebrackets"
-        ]
+            "spacebeforebrackets"]
 
         self.expectedReturn = [
             'TestFunctionForTestCase1',
@@ -60,8 +66,7 @@ class TestConvertFunctionNameToUnittestClassName(unittest.TestCase):
             'TestFunctionForTestCase2',
             'TestFunctionForTestCase',
             'TestFunctionForTestCase2',
-            'TestSpacebeforebrackets'
-        ]
+            'TestSpacebeforebrackets']
 
     def test_function_names_formatted_to_class_name_correctly(self):
         returnedValue = create_tests.convert_function_name_to_unittest_class_name(self.functionList)
@@ -71,23 +76,52 @@ class TestConvertFunctionNameToUnittestClassName(unittest.TestCase):
 
 class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
 
-    def setUp(self):
-        pass
+    def test_function_adds_correct_slashes_for_filepath(self):
+        inputList = [
+            "C:\pythonfile.py",
+            "/z/pythonflie.py"]
+        expectedOutputList = [
+            "C:\\tests\\test_pythonfile.py",
+            "/z/tests/test_pythonflie.py"]
 
-    def tearDown(self):
-        pass
+        for returnedValue in yield_input_expected_output_match(create_tests.construct_unittest_filepath_from_users_filepath, inputList, expectedOutputList):
+            self.assertTrue(returnedValue[0], msg=returnedValue[1])
 
     def test_function_returns_unittest_filepath_from_valid_input(self):
-        pass
+        inputList = [
+            "C:\pythonfile.py",
+            "C:\python_file.py",
+            "C:\PythonFile.py",
+            "C:\pythonfile.py",
+            "C:\python file.py",
+            "D:\python_file.py",
+            "/z/pythonflie.py"]
+        expectedOutputList = [
+            "C:\\tests\\test_pythonfile.py",
+            "C:\\tests\\test_python_file.py",
+            "C:\\tests\\test_PythonFile.py",
+            "C:\\tests\\test_pythonfile.py",
+            "C:\\tests\\test_python file.py",
+            "D:\\tests\\test_python_file.py",
+            "/z/tests/test_pythonflie.py"]
+
+        for returnedValue in yield_input_expected_output_match(create_tests.construct_unittest_filepath_from_users_filepath, inputList, expectedOutputList):
+            self.assertTrue(returnedValue[0], msg=returnedValue[1])
 
     def test_function_returns_false_from_invalid_input(self):
-        pass
+        returnedValue = create_tests.construct_unittest_filepath_from_users_filepath("pythonfile")
+
+        self.assertFalse(returnedValue)
 
     def test_function_only_accepts_py_files(self):
-        pass
+        returnedValue = create_tests.construct_unittest_filepath_from_users_filepath("C:\pythonfile.pie")
 
-    def test_function_adds_correct_slashes_for_filepath(self):
-        pass
+        self.assertFalse(returnedValue)
+
+    def test_function_needs_full_file_path(self):
+        returnedValue = create_tests.construct_unittest_filepath_from_users_filepath("pythonfile.py")
+
+        self.assertFalse(returnedValue)
 
 
 class TestCompareFunctionsInExistingTestFile(unittest.TestCase):
