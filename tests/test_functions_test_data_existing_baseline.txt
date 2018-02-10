@@ -1,0 +1,213 @@
+import unittest
+import functions_test_data
+
+
+class TestFunctionForTestCase1(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase2(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase3(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase4(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionfortestcase(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionfortestcase2(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase2(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase2(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestSpacebeforebrackets(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase1(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase2(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase3(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase4(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionfortestcase(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionfortestcase2(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase2(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestFunctionForTestCase2(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class TestSpacebeforebrackets(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+class ThisIsNew(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
+if __name__ == "__main__":
+    unittest.main()
