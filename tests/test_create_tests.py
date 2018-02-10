@@ -124,16 +124,63 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
         self.assertFalse(returnedValue)
 
 
+class TestWriteNewFunctionsToFile(unittest.TestCase):
+
+    def setUp(self):
+        self.unitTestFilePath = "/home/vagrant/CPTS/tests/test_functions_test_data.py"
+        self.unitTestFileFreshBaseline = "/home/vagrant/CPTS/tests/test_functions_test_data_fresh_baseline.txt"
+        self.unitTestFileExistingBaseline = "/home/vagrant/CPTS/tests/test_functions_test_data_existing_baseline.txt"
+        functionList = create_tests.find_functions_in_file("/home/vagrant/CPTS/tests/functions_test_data.txt")
+        self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
+
+    def tearDown(self):
+        os.remove(self.unitTestFilePath)
+
+    def test_file_is_created(self):
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, False)
+        doesfileExist = os.path.isfile(self.unitTestFilePath)
+
+        self.assertTrue(doesfileExist)
+
+    def test_file_matches_baseline_for_fresh_file(self):
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, False)
+
+        with open(self.unitTestFilePath, "r") as createdFile:
+            createdFileContents = createdFile.read()
+            createdFile.close()
+
+        with open(self.unitTestFileFreshBaseline, "r") as baseLine:
+            baseLineFileContents = baseLine.read()
+            baseLine.close()
+
+        self.assertEqual(createdFileContents, baseLineFileContents)
+
+    def test_file_matches_baseline_for_existing_file(self):
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, False)
+        self.classList.append("ThisIsNew")
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, True)
+
+        with open(self.unitTestFilePath, "r") as createdFile:
+            createdFileContents = createdFile.read()
+            createdFile.close()
+
+        with open(self.unitTestFileExistingBaseline, "r") as baseLine:
+            baseLineFileContents = baseLine.read()
+            baseLine.close()
+
+        self.assertEqual(createdFileContents, baseLineFileContents)
+
+
 class TestFilterExistingClassesFromTestFile(unittest.TestCase):
 
     def setUp(self):
-        self.unitTestFilePath = "/home/vagrant/CPTS/tests/test_functions_test_data.txt"
+        self.unitTestFilePath = "/home/vagrant/CPTS/tests/test_functions_test_data.py"
         functionList = create_tests.find_functions_in_file("/home/vagrant/CPTS/tests/functions_test_data.txt")
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, False)
 
     def tearDown(self):
-        os.remove("/home/vagrant/CPTS/tests/test_functions_test_data.txt")
+        os.remove(self.unitTestFilePath)
 
     def test_list_of_functions_returned(self):
         returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
@@ -150,27 +197,6 @@ class TestFilterExistingClassesFromTestFile(unittest.TestCase):
         returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
 
         self.assertEquals(returnedValue, ["ThisIsNew"])
-
-
-class TestWriteNewFunctionsToFile(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
-    def test_file_is_created(self):
-        pass
-
-    def test_imports_are_added(self):
-        pass
-
-    def test_function_test_classes_are_added(self):
-        pass
-
-    def test_setup_and_teardown_are_added(self):
-        pass
 
 
 if __name__ == "__main__":
