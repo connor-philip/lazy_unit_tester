@@ -10,13 +10,13 @@ def yield_input_expected_output_match(function, inputList, expectedOutputList):
         if function(item) == expectedOutputList[index]:
             yield (True, "")
         else:
-            yield (False, "return of %s(%s) did not match %s" % (function.__name__, item, expectedOutputList[index]))
+            yield (False, "return of {}({}) did not match {}".format(function.__name__, item, expectedOutputList[index]))
 
 
 class TestFindFunctionsInFile(unittest.TestCase):  # Differet types of invalid function names are listed in functions_test_data.txt
 
     def setUp(self):
-        self.functions_test_data_file = "%s/functions_test_data.txt" % (CURRENTDIRPATH)
+        self.functions_test_data_file = "{}/functions_test_data.txt".format(CURRENTDIRPATH)
         self.returnedValue = create_tests.find_functions_in_file(self.functions_test_data_file)
 
     def test_list_of_functions_returned(self):

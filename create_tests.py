@@ -24,7 +24,7 @@ def convert_function_name_to_unittest_class_name(functionList):
 
     for function in functionList:
         className = re.sub(r"(^|_)(\w)", findMatchGroup, function)
-        className = "Test%s" % (className)
+        className = "Test{}".format(className)
         classList.append(className)
 
     return classList
@@ -32,7 +32,7 @@ def convert_function_name_to_unittest_class_name(functionList):
 
 def construct_unittest_filepath_from_users_filepath(filePath):
     def findMatchGroup(matchobj):
-        return "%stests%stest_%s" % (matchobj.group(1), matchobj.group(1), matchobj.group(2))
+        return "{0}tests{0}test_{1}".format(matchobj.group(1), matchobj.group(2))
 
     unittestFilepath = re.sub(r"(\/|\\)([^\/|\\]+\.py$)", findMatchGroup, filePath)
 
@@ -57,7 +57,7 @@ def filter_existing_classes_from_test_file(filePath, classList):
 def write_new_functions_to_file(filePath, classList):
     with open(filePath, "a") as unitTestFile:
         for className in classList:
-            classNameString = "class %s(unittest.TestCase):\n\n" % (className)
+            classNameString = "class {}(unittest.TestCase):\n\n".format(className)
             setUpString = "    def setUp(self):\n        pass\n\n"
             tearDownString = "    def tearDown(self):\n        pass\n\n"
             unitTestFile.write(classNameString)
