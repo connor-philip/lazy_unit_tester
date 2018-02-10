@@ -35,6 +35,10 @@ def construct_unittest_filepath_from_users_filepath(filePath):
         return "%stests%stest_%s" % (matchobj.group(1), matchobj.group(1), matchobj.group(2))
 
     unittestFilepath = re.sub(r"(\/|\\)([^\/|\\]+\.py$)", findMatchGroup, filePath)
+
+    if filePath == unittestFilepath:
+        return False
+
     return unittestFilepath
 
 
