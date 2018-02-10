@@ -124,22 +124,32 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
         self.assertFalse(returnedValue)
 
 
-class TestCompareFunctionsInExistingTestFile(unittest.TestCase):
+class TestFilterExistingClassesFromTestFile(unittest.TestCase):
 
     def setUp(self):
-        pass
+        self.unitTestFilePath = "/home/vagrant/CPTS/tests/test_functions_test_data.txt"
+        functionList = create_tests.find_functions_in_file("/home/vagrant/CPTS/tests/functions_test_data.txt")
+        self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
 
     def tearDown(self):
-        pass
+        os.remove("/home/vagrant/CPTS/tests/test_functions_test_data.txt")
 
     def test_list_of_functions_returned(self):
-        pass
+        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
+
+        self.assertIsInstance(returnedValue, list)
 
     def test_existing_functions_are_excluded(self):
-        pass
+        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
+
+        self.assertEquals(returnedValue, [])
 
     def test_new_functions_are_included(self):
-        pass
+        self.classList.append("ThisIsNew")
+        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
+
+        self.assertEquals(returnedValue, ["ThisIsNew"])
 
 
 class TestWriteNewFunctionsToFile(unittest.TestCase):
