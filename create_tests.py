@@ -42,8 +42,16 @@ def construct_unittest_filepath_from_users_filepath(filePath):
     return unittestFilepath
 
 
-def compare_functions_in_existing_test_file(filePath):
-    pass
+def filter_existing_classes_from_test_file(filePath, classList):
+    newClassList = []
+
+    for className in classList:
+        with open(filePath) as openFileObj:
+            if className not in openFileObj.read():
+                newClassList.append(className)
+        openFileObj.close()
+
+    return newClassList
 
 
 def write_new_functions_to_file():
