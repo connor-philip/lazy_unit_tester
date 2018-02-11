@@ -54,33 +54,40 @@ def filter_existing_classes_from_test_file(filePath, classList):
     return newClassList
 
 
-def write_new_functions_to_file(filePath, classList, existingFile):
+def write_new_functions_to_file(filePath, classList):
     userFileNameImport = re.search(r"tests[\\|\/]test_(.+)\.py", filePath).group(1)
     insertIndex = 0
 
     with open(filePath, "a+") as unitTestFile:
         bodyString = unitTestFile.readlines()
+        strippedBodyString = []
 
-        if not existingFile:
-            bodyString.insert(insertIndex, "import unittest{0}".format("\n"))
-            bodyString.insert(insertIndex + 1, "import {0}{1}{1}{1}".format(userFileNameImport, "\n"))
+        importUnittestLine = "import unittest{0}".format("\n")
+        importUserFunctionLine = "import {0}{1}{1}{1}".format(userFileNameImport, "\n")
+        ifNameLine = "if __name__ == \"__main__\":{0}".format("\n")
+        unittestMainLine = "{0}unittest.main(){1}".format("    ", "\n")
 
-        if existingFile:
-            for line in bodyString:
-                if "if __name__ == \"__main__\":" in line:
-                    insertIndex = bodyString.index(line)
-        else:
-            insertIndex = 2
+        for line in bodyString:
+            strippedBodyString.append(line.strip("\n"))
+
+        if importUnittestLine.strip("\n") not in strippedBodyString:
+            bodyString.insert(insertIndex, importUnittestLine)
+        if importUserFunctionLine.strip("\n") not in strippedBodyString:
+            bodyString.insert(insertIndex + 1, importUserFunctionLine)
+        if ifNameLine.strip("\n") not in strippedBodyString:
+            bodyString.insert(insertIndex + 2, "if __name__ == \"__main__\":{0}".format("\n"))
+        if unittestMainLine.strip("\n") not in strippedBodyString:
+            bodyString.insert(insertIndex + 3, "{0}unittest.main(){1}".format("    ", "\n"))
+
+        for line in bodyString:
+            if "if __name__ == \"__main__\":" in line:
+                insertIndex = bodyString.index(line)
 
         for className in classList:
             bodyString.insert(insertIndex, "class {0}(unittest.TestCase):{1}{1}".format(className, "\n"))
             bodyString.insert(insertIndex + 1, "{0}def setUp(self):{1}{0}{0}pass{1}{1}".format("    ", "\n"))
             bodyString.insert(insertIndex + 2, "{0}def tearDown(self):{1}{0}{0}pass{1}{1}{1}".format("    ", "\n"))
             insertIndex += 3
-
-        if not existingFile:
-            bodyString.insert(insertIndex + 1, "if __name__ == \"__main__\":{0}".format("\n"))
-            bodyString.insert(insertIndex + 2, "{0}unittest.main(){1}".format("    ", "\n"))
 
         unitTestFile.close()
 

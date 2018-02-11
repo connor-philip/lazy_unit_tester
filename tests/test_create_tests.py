@@ -137,13 +137,13 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
         os.remove(self.unitTestFilePath)
 
     def test_file_is_created(self):
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, False)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
         doesfileExist = os.path.isfile(self.unitTestFilePath)
 
         self.assertTrue(doesfileExist)
 
     def test_file_matches_baseline_for_fresh_file(self):
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, False)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
 
         with open(self.unitTestFilePath, "r") as createdFile:
             createdFileContents = createdFile.read()
@@ -153,12 +153,12 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
             baseLineFileContents = baseLine.read()
             baseLine.close()
 
-        self.assertEqual(createdFileContents, baseLineFileContents)
+        self.assertEqual(createdFileContents, baseLineFileContents, msg="created file did not match baseline, created file;\n{}".format(createdFileContents))
 
     def test_file_matches_baseline_for_existing_file(self):
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, False)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
         self.classList.append("ThisIsNew")
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, True)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
 
         with open(self.unitTestFilePath, "r") as createdFile:
             createdFileContents = createdFile.read()
@@ -168,7 +168,7 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
             baseLineFileContents = baseLine.read()
             baseLine.close()
 
-        self.assertEqual(createdFileContents, baseLineFileContents)
+        self.assertEqual(createdFileContents, baseLineFileContents, msg="created file did not match baseline, created file;\n{}".format(createdFileContents))
 
 
 class TestFilterExistingClassesFromTestFile(unittest.TestCase):
@@ -177,7 +177,7 @@ class TestFilterExistingClassesFromTestFile(unittest.TestCase):
         self.unitTestFilePath = "/home/vagrant/CPTS/tests/test_functions_test_data.py"
         functionList = create_tests.find_functions_in_file("/home/vagrant/CPTS/tests/functions_test_data.txt")
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList, False)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
 
     def tearDown(self):
         os.remove(self.unitTestFilePath)
