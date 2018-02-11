@@ -75,12 +75,12 @@ def write_new_functions_to_file(filePath, classList):
         if importUserFunctionLine.strip("\n") not in strippedBodyString:
             bodyString.insert(insertIndex + 1, importUserFunctionLine)
         if ifNameLine.strip("\n") not in strippedBodyString:
-            bodyString.insert(insertIndex + 2, "if __name__ == \"__main__\":{0}".format("\n"))
+            bodyString.insert(insertIndex + 2, ifNameLine)
         if unittestMainLine.strip("\n") not in strippedBodyString:
-            bodyString.insert(insertIndex + 3, "{0}unittest.main(){1}".format("    ", "\n"))
+            bodyString.insert(insertIndex + 3, unittestMainLine)
 
         for line in bodyString:
-            if "if __name__ == \"__main__\":" in line:
+            if ifNameLine in line:
                 insertIndex = bodyString.index(line)
 
         for className in classList:
