@@ -59,38 +59,31 @@ def write_new_functions_to_file(filePath, classList):
     insertIndex = 0
 
     with open(filePath, "a+") as unitTestFile:
-        bodyString = unitTestFile.readlines()
-        strippedBodyString = []
-
-        importUnittestLine = "import unittest{0}".format("\n")
-        importUserFunctionLine = "import {0}{1}{1}{1}".format(userFileNameImport, "\n")
-        ifNameLine = "if __name__ == \"__main__\":{0}".format("\n")
-        unittestMainLine = "{0}unittest.main(){1}".format("    ", "\n")
-
-        for line in bodyString:
-            strippedBodyString.append(line.strip("\n"))
-
-        if importUnittestLine.strip("\n") not in strippedBodyString:
-            bodyString.insert(insertIndex, importUnittestLine)
-        if importUserFunctionLine.strip("\n") not in strippedBodyString:
-            bodyString.insert(insertIndex + 1, importUserFunctionLine)
-        if ifNameLine.strip("\n") not in strippedBodyString:
-            bodyString.insert(insertIndex + 2, ifNameLine)
-        if unittestMainLine.strip("\n") not in strippedBodyString:
-            bodyString.insert(insertIndex + 3, unittestMainLine)
-
-        for line in bodyString:
-            if ifNameLine in line:
-                insertIndex = bodyString.index(line)
-
-        for className in classList:
-            bodyString.insert(insertIndex, "class {0}(unittest.TestCase):{1}{1}".format(className, "\n"))
-            bodyString.insert(insertIndex + 1, "{0}def setUp(self):{1}{0}{0}pass{1}{1}".format("    ", "\n"))
-            bodyString.insert(insertIndex + 2, "{0}def tearDown(self):{1}{0}{0}pass{1}{1}{1}".format("    ", "\n"))
-            insertIndex += 3
-
+        bodyStringList = unitTestFile.readlines()
         unitTestFile.close()
 
+    strippedBodyString = []
+    standardStringList = [
+        "import unittest{0}".format("\n"),
+        "import {0}{1}{1}{1}".format(userFileNameImport, "\n"),
+        "if __name__ == \"__main__\":{0}".format("\n"),
+        "{0}unittest.main(){1}".format("    ", "\n")]
+
+    for line in bodyStringList:
+        strippedBodyString.append(line.strip("\n"))
+
+    for string in standardStringList:
+        if string.strip("\n") not in strippedBodyString:
+            bodyStringList.insert(insertIndex + standardStringList.index(string), string)
+
+    insertIndex = bodyStringList.index(standardStringList[2])
+
+    for className in classList:
+        bodyStringList.insert(insertIndex, "class {0}(unittest.TestCase):{1}{1}".format(className, "\n"))
+        bodyStringList.insert(insertIndex + 1, "{0}def setUp(self):{1}{0}{0}pass{1}{1}".format("    ", "\n"))
+        bodyStringList.insert(insertIndex + 2, "{0}def tearDown(self):{1}{0}{0}pass{1}{1}{1}".format("    ", "\n"))
+        insertIndex += 3
+
     with open(filePath, "w") as unitTestFile:
-        unitTestFile.writelines(bodyString)
+        unitTestFile.writelines(bodyStringList)
         unitTestFile.close()
