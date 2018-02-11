@@ -92,7 +92,7 @@ def write_new_functions_to_file(filePath, classList):
 class CreateTests:
 
     def __init__(self, usersFilePath):
-        self.usersFilePath = usersFilePath
+        self.usersFilePath = os.path.abspath(usersFilePath)
         self.unittestFilePath = construct_unittest_filepath_from_users_filepath(self.usersFilePath)
         self.functionLists = find_functions_in_file(self.usersFilePath)
         self.classList = convert_function_name_to_unittest_class_name(self.functionLists)
