@@ -34,12 +34,12 @@ def construct_unittest_filepath_from_users_filepath(filePath):
     def findMatchGroup(matchobj):
         return "{0}tests{0}test_{1}".format(matchobj.group(1), matchobj.group(2))
 
-    unittestFilepath = re.sub(r"(\/|\\)([^\/|\\]+\.py$)", findMatchGroup, filePath)
+    unittestFilePath = re.sub(r"(\/|\\)([^\/|\\]+\.py$)", findMatchGroup, filePath)
 
-    if filePath == unittestFilepath:
+    if filePath == unittestFilePath:
         return False
 
-    return unittestFilepath
+    return unittestFilePath
 
 
 def filter_existing_classes_from_test_file(filePath, classList):
@@ -87,3 +87,18 @@ def write_new_functions_to_file(filePath, classList):
     with open(filePath, "w") as unitTestFile:
         unitTestFile.writelines(bodyStringList)
         unitTestFile.close()
+
+
+class CreateTests:
+
+    def __init__(self, usersFilePath):
+        self.usersFilePath = usersFilePath
+        self.unittestFilePath = construct_unittest_filepath_from_users_filepath(self.usersFilePath)
+        self.functionLists = find_functions_in_file(self.usersFilePath)
+        self.classList = convert_function_name_to_unittest_class_name(self.functionLists)
+
+    def write_tests(self):
+        if os.path.isfile(self.unittestFilePath):
+            self.classList = filter_existing_classes_from_test_file(self.unittestFilePath, self.classList)
+
+        write_new_functions_to_file(self.unittestFilePath, self.classList)
