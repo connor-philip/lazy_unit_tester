@@ -72,9 +72,9 @@ def write_new_functions_to_file(filePath, classList):
     for line in bodyStringList:
         strippedBodyString.append(line.strip("\n"))
 
-    for string in standardStringList:
+    for indexOffSet, string in enumerate(standardStringList):
         if string.strip("\n") not in strippedBodyString:
-            bodyStringList.insert(insertIndex + standardStringList.index(string), string)
+            bodyStringList.insert((insertIndex + indexOffSet), string)
 
     insertIndex = bodyStringList.index(standardStringList[2])
 
