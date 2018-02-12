@@ -118,3 +118,4 @@ class CreateTests:
             self.classList = filter_existing_classes_from_test_file(self.unittestFilePath, self.classList)
 
         write_new_functions_to_file(self.unittestFilePath, self.classList)
+        return "Wrote {} new function(s) to {}".format(len(self.classList), self.unittestFilePath)

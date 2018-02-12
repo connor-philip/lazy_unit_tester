@@ -8,4 +8,4 @@ parser.add_argument("-c", "--commented", action="store_true", help="Also looks f
 args = parser.parse_args()
 
 
-CreateTests(args.file, args.commented, args.indented).write_tests()
+print CreateTests(args.file, args.commented, args.indented).write_tests()

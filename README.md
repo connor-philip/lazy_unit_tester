@@ -101,5 +101,4 @@ if __name__ == "__main__":
 
 
 ## TODO:
-+ Make it noisier. I don't like tools flooding the screen with what they're doing, but some feedback can be nice.
 + Look into making it a plugin for SublimeText
