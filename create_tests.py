@@ -2,14 +2,29 @@ import re
 import os
 
 
-def find_functions_in_file(filePath):
+def regex_switch(commented, indented):
+    baseRegex = r"(?:def\s)(\w+)(?=\s?\((.+)?\):)"
+
+    if commented and indented:
+        searchRegex = baseRegex
+    elif commented:
+        searchRegex = r"^(?:#[ \t]?)?{}".format(baseRegex)
+    elif indented:
+        searchRegex = r"^(?:[ \t]+)?{}".format(baseRegex)
+    else:
+        searchRegex = r"^{}".format(baseRegex)
+
+    return searchRegex
+
+
+def find_functions_in_file(filePath, searchRegex):
     functionList = []
 
     with open(filePath, "r") as openFileObj:
         for line in openFileObj:
-            functionMatch = re.search(r"(?<=^def\s)\w+(?=\s?\((.+)?\):)", line)
+            functionMatch = re.search(searchRegex, line)
             if functionMatch is not None:
-                functionList.append(functionMatch.group(0))
+                functionList.append(functionMatch.group(1))
 
         openFileObj.close()
 
@@ -91,10 +106,11 @@ def write_new_functions_to_file(filePath, classList):
 
 class CreateTests:
 
-    def __init__(self, usersFilePath):
+    def __init__(self, usersFilePath, serarchCommented, serarchIndented):
         self.usersFilePath = os.path.abspath(usersFilePath)
+        self.searchRegex = regex_switch(serarchCommented, serarchIndented)
         self.unittestFilePath = construct_unittest_filepath_from_users_filepath(self.usersFilePath)
-        self.functionLists = find_functions_in_file(self.usersFilePath)
+        self.functionLists = find_functions_in_file(self.usersFilePath, self.searchRegex)
         self.classList = convert_function_name_to_unittest_class_name(self.functionLists)
 
     def write_tests(self):

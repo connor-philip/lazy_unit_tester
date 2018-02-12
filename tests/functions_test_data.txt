@@ -67,6 +67,33 @@ def_underscore_no_spaces():
     pass
 
 
+    def space_indented_function():
+        pass
+
+
+    def tab_indented_function():
+        pass
+
+
+# def commented_function1():
+#     pass
+
+
+#def commented_function2():
+#     pass
+
+
+    # def commented_space_indented_function():
+    #     pass
+
+
+ #    def commented_space_indented_function2():
+ #        pass
+
+
+    # def commented_tab_indented_function():
+    #   pass
+
 
 randomlongstringjustforthesakeoftestingandnootherpurposesotherthanbeingusedforunittest
 
