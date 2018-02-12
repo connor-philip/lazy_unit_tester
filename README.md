@@ -8,7 +8,17 @@ The tool is designed to work on both Windows and Linux. However for ease, this p
 
 
 ## Usage
-`python lazy.py -f <target file>`
+**Syntax:**
+
+**`python lazy.py -f FILE [-i] [-c]`**
+
+| Parameter | Description |
+------------|--------------
+| -f        | Target file to create tests for. Required    |
+| -i        | Include indented functions                   |
+| -c        | Include commented functions                  |
+| -h        | Prints basic help menu                       |
+
 
 
 ## Example
@@ -92,5 +102,4 @@ if __name__ == "__main__":
 
 ## TODO:
 + Make it noisier. I don't like tools flooding the screen with what they're doing, but some feedback can be nice.
-+ Option to catch/ignore indented and commented functions. Current behaviour ignores indented and catches commented
 + Look into making it a plugin for SublimeText
