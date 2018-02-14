@@ -221,11 +221,11 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
 class TestWriteNewFunctionsToFile(unittest.TestCase):
 
     def setUp(self):
-        self.unitTestFilePath = "/home/vagrant/CPTS/tests/test_functions_test_data.py"
-        self.unitTestFileFreshBaseline = "/home/vagrant/CPTS/tests/test_functions_test_data_fresh_baseline.txt"
-        self.unitTestFileExistingBaseline = "/home/vagrant/CPTS/tests/test_functions_test_data_existing_baseline.txt"
+        self.unitTestFilePath = "{}/test_functions_test_data.py".format(CURRENTDIRPATH)
+        self.unitTestFileFreshBaseline = "{}/test_functions_test_data_fresh_baseline.txt".format(CURRENTDIRPATH)
+        self.unitTestFileExistingBaseline = "{}/test_functions_test_data_existing_baseline.txt".format(CURRENTDIRPATH)
         self.standardRegex = create_tests.regex_switch(commented=False, indented=False)
-        functionList = create_tests.find_functions_in_file("/home/vagrant/CPTS/tests/functions_test_data.txt", self.standardRegex)
+        functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH), self.standardRegex)
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
 
     def tearDown(self):
@@ -269,9 +269,9 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
 class TestFilterExistingClassesFromTestFile(unittest.TestCase):
 
     def setUp(self):
-        self.unitTestFilePath = "/home/vagrant/CPTS/tests/test_functions_test_data.py"
+        self.unitTestFilePath = "{}/test_functions_test_data.py".format(CURRENTDIRPATH)
         self.standardRegex = create_tests.regex_switch(commented=False, indented=False)
-        functionList = create_tests.find_functions_in_file("/home/vagrant/CPTS/tests/functions_test_data.txt", self.standardRegex)
+        functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH), self.standardRegex)
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
         create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
 

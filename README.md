@@ -1,7 +1,7 @@
 # Lazy Unit Tester
 A tool to create unit test stubs from the functions inside the file you point it at.
 
-The tool is designed to work on both Windows and Linux. However for ease, this project's unit tests are designed to run in the Vagrant environment included.
+The tool is designed to work on both Windows and Linux.
 
 
  ---
