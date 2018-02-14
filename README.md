@@ -33,12 +33,6 @@ def my_function1():
 def myFunction2():
     pass
 
-def MyFunction3():
-    pass
-
-def myfunction4():
-    pass
-
 def another_function ():
     pass
 
@@ -61,24 +55,6 @@ class MyFunction1(unittest.TestCase):
 
 
 class MyFunction2(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
-
-class MyFunction3(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
-
-class Myfunction4(unittest.TestCase):
 
     def setUp(self):
         pass
