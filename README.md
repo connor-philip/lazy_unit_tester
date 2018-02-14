@@ -1,4 +1,6 @@
 # Lazy Unit Tester
+[![Build Status](https://travis-ci.org/connor-philip/lazy_unit_tester.svg?branch=master)](https://travis-ci.org/connor-philip/lazy_unit_tester)
+
 A tool to create unit test stubs from the functions inside the file you point it at.
 
 The tool is designed to work on both Windows and Linux.
