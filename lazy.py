@@ -1,5 +1,7 @@
 from create_tests import CreateTests
 import argparse
+import sys
+
 
 parser = argparse.ArgumentParser(prog="command")
 parser.add_argument("-f", "--file", type=str, required=True, help="File which you want to unittests for")
@@ -8,4 +10,5 @@ parser.add_argument("-c", "--commented", action="store_true", help="Also looks f
 args = parser.parse_args()
 
 
-print CreateTests(args.file, args.commented, args.indented).write_tests()
+returnedMessage = CreateTests(args.file, args.commented, args.indented).write_tests()
+sys.stdout.write("{}\n".format(returnedMessage))
