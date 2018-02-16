@@ -116,6 +116,8 @@ class CreateTests:
     def write_tests(self):
         if os.path.isfile(self.unittestFilePath):
             self.classList = filter_existing_classes_from_test_file(self.unittestFilePath, self.classList)
+        elif not os.path.exists(os.path.dirname(self.unittestFilePath)):
+            os.makedirs(os.path.dirname(self.unittestFilePath))
 
         write_new_functions_to_file(self.unittestFilePath, self.classList)
         self.userMessage = "Wrote {} new function(s) to {}".format(len(self.classList), self.unittestFilePath)
