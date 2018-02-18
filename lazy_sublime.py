@@ -35,7 +35,3 @@ class CreatePythonUnittestsIncludeCommentedAndIndentedCommand(sublime_plugin.Tex
         fileName = self.view.file_name()
         instance = create_tests_wrapper(fileName, True, True)
         sublime.active_window().open_file(instance.unittestFilePath)
-
-
-# def com():
-#     pass
