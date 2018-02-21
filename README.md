@@ -1,5 +1,5 @@
 # Lazy Unit Tester
-[![Build Status](https://travis-ci.org/connor-philip/lazy_unit_tester.svg?branch=sublime_plugin)](https://travis-ci.org/connor-philip/lazy_unit_tester)
+[![Build Status](https://travis-ci.org/connor-philip/lazy_unit_tester.svg?branch=master)](https://travis-ci.org/connor-philip/lazy_unit_tester)
 
 A tool to create unit test stubs from the functions inside the file you point it at.
 
