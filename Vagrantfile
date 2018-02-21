@@ -9,5 +9,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell",
    inline: "sudo pip install /home/vagrant/lazy_unit_tester"
   config.vm.provision "shell",
-   inline: "python /home/vagrant/lazy_unit_tester/tests/test_create_tests.py"
+   inline: "python /home/vagrant/lazy_unit_tester/tests/test_create_tests.py -v"
 end
