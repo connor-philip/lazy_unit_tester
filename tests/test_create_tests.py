@@ -286,13 +286,13 @@ class TestFilterExistingClassesFromTestFile(unittest.TestCase):
     def test_existing_functions_are_excluded(self):
         returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
 
-        self.assertEquals(returnedValue, [])
+        self.assertEqual(returnedValue, [])
 
     def test_new_functions_are_included(self):
         self.classList.append("ThisIsNew")
         returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
 
-        self.assertEquals(returnedValue, ["ThisIsNew"])
+        self.assertEqual(returnedValue, ["ThisIsNew"])
 
 
 if __name__ == "__main__":
