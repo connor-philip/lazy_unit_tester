@@ -1,3 +1,4 @@
 .vagrant
 *.pyc
 tests/test_functions_test_data.txt
+build/
