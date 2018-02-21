@@ -10,5 +10,6 @@ parser.add_argument("-c", "--commented", action="store_true", help="Also looks f
 args = parser.parse_args()
 
 
-returnedMessage = CreateTests(args.file, args.commented, args.indented).write_tests()
-sys.stdout.write("{}\n".format(returnedMessage))
+instance = CreateTests(args.file, args.commented, args.indented)
+instance.write_tests()
+sys.stdout.write("{}\n".format(instance.userMessage))

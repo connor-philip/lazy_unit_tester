@@ -74,6 +74,7 @@ def write_new_functions_to_file(filePath, classList):
     insertIndex = 0
 
     with open(filePath, "a+") as unitTestFile:
+        unitTestFile.seek(0)
         bodyStringList = unitTestFile.readlines()
         unitTestFile.close()
 
@@ -120,4 +121,4 @@ class CreateTests:
             os.makedirs(os.path.dirname(self.unittestFilePath))
 
         write_new_functions_to_file(self.unittestFilePath, self.classList)
-        return "Wrote {} new function(s) to {}".format(len(self.classList), self.unittestFilePath)
+        self.userMessage = "Wrote {} new function(s) to {}".format(len(self.classList), self.unittestFilePath)
