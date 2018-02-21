@@ -74,6 +74,7 @@ def write_new_functions_to_file(filePath, classList):
     insertIndex = 0
 
     with open(filePath, "a+") as unitTestFile:
+        unitTestFile.seek(0)
         bodyStringList = unitTestFile.readlines()
         unitTestFile.close()
 
