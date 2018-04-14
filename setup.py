@@ -1,4 +1,4 @@
-import distutils
+import distutils.core
 
 distutils.core.setup(name="create_tests",
                      description="create_tests for lazy unit tester",
