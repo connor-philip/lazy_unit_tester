@@ -1,6 +1,6 @@
 import sublime
 import sublime_plugin
-from lazy_unit_tester.create_tests import CreateTests
+from .create_tests import CreateTests
 
 
 def create_tests_wrapper(fileName, includeCommented, includeIndented):
