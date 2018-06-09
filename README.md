@@ -76,7 +76,3 @@ if __name__ == "__main__":
     unittest.main()
 
 ```
-
-
-## Note
-This tool is designed to work for python files, and the default python unittest package. I don't have any plans myself to add support in terms of new unittesting packages, or languages. However if anyone wishes to contribute, I'm more than happy to accept any reviewed changes to add more support, and to help change the current functionality also.
