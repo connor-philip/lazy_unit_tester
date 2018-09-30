@@ -48,7 +48,7 @@ class TestRegexSwitch(unittest.TestCase):
 class TestFindFunctionsInFile(unittest.TestCase):
 
     def setUp(self):
-        self.functions_test_data_file = "{}/functions_test_data.txt".format(CURRENTDIRPATH)
+        self.functions_test_data_file = os.path.join(CURRENTDIRPATH, "functions_test_data.txt")
         self.standardRegex = create_tests.regex_switch(commented=False, indented=False)
         self.includeCommentedRegex = create_tests.regex_switch(commented=True, indented=False)
         self.includeindentedRegex = create_tests.regex_switch(commented=False, indented=True)
@@ -221,11 +221,11 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
 
     def setUp(self):
         self.fileName = "test_functions_test_data.py"
-        self.unitTestFilePath = "{}/test_functions_test_data.py".format(CURRENTDIRPATH)
-        self.unitTestFileFreshBaseline = "{}/test_functions_test_data_fresh_baseline.txt".format(CURRENTDIRPATH)
-        self.unitTestFileExistingBaseline = "{}/test_functions_test_data_existing_baseline.txt".format(CURRENTDIRPATH)
+        self.unitTestFilePath = os.path.join(CURRENTDIRPATH, "test_functions_test_data.py")
+        self.unitTestFileFreshBaseline = os.path.join(CURRENTDIRPATH, "test_functions_test_data_fresh_baseline.txt")
+        self.unitTestFileExistingBaseline = os.path.join(CURRENTDIRPATH, "test_functions_test_data_existing_baseline.txt")
         self.standardRegex = create_tests.regex_switch(commented=False, indented=False)
-        functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH),
+        functionList = create_tests.find_functions_in_file(os.path.join(CURRENTDIRPATH, "functions_test_data.txt"),
                                                            self.standardRegex)
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
 
@@ -275,9 +275,9 @@ class TestFilterExistingClassesFromTestFile(unittest.TestCase):
 
     def setUp(self):
         self.fileName = "test_functions_test_data.py"
-        self.unitTestFilePath = "{}/test_functions_test_data.py".format(CURRENTDIRPATH)
+        self.unitTestFilePath = os.path.join(CURRENTDIRPATH, "test_functions_test_data.py")
         self.standardRegex = create_tests.regex_switch(commented=False, indented=False)
-        functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH),
+        functionList = create_tests.find_functions_in_file(os.path.join(CURRENTDIRPATH, "functions_test_data.txt"),
                                                            self.standardRegex)
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
         create_tests.write_new_functions_to_file(self.unitTestFilePath, self.fileName, self.classList)
