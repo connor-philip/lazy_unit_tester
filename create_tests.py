@@ -51,7 +51,7 @@ def construct_unittest_filepath_from_users_filepath(filePath):
 
     unittestFilePath = re.sub(r"(\/|\\)([^\/|\\]+\.py$)", findMatchGroup, filePath)
 
-    if filePath == unittestFilePath:
+    if unittestFilePath == filePath:  # if path hasn't been updated
         return False
 
     return unittestFilePath
@@ -107,7 +107,7 @@ def write_new_functions_to_file(filePath, classList):
 
 class CreateTests:
 
-    def __init__(self, usersFilePath, serarchCommented, serarchIndented):
+    def __init__(self, usersFilePath, testDirectory, serarchCommented, serarchIndented):
         self.usersFilePath = os.path.abspath(usersFilePath)
         self.searchRegex = regex_switch(serarchCommented, serarchIndented)
         self.unittestFilePath = construct_unittest_filepath_from_users_filepath(self.usersFilePath)
