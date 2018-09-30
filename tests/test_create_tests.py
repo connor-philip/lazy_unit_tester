@@ -220,6 +220,7 @@ class TestCreateUnittestFilepath(unittest.TestCase):
 class TestWriteNewFunctionsToFile(unittest.TestCase):
 
     def setUp(self):
+        self.fileName = "test_functions_test_data.py"
         self.unitTestFilePath = "{}/test_functions_test_data.py".format(CURRENTDIRPATH)
         self.unitTestFileFreshBaseline = "{}/test_functions_test_data_fresh_baseline.txt".format(CURRENTDIRPATH)
         self.unitTestFileExistingBaseline = "{}/test_functions_test_data_existing_baseline.txt".format(CURRENTDIRPATH)
@@ -232,13 +233,13 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
         os.remove(self.unitTestFilePath)
 
     def test_file_is_created(self):
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.fileName, self.classList)
         doesfileExist = os.path.isfile(self.unitTestFilePath)
 
         self.assertTrue(doesfileExist)
 
     def test_file_matches_baseline_for_fresh_file(self):
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.fileName, self.classList)
 
         with open(self.unitTestFilePath, "r") as createdFile:
             createdFileContents = createdFile.read()
@@ -253,9 +254,9 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
                          msg="created file did not match baseline, created file;\n{}".format(createdFileContents))
 
     def test_file_matches_baseline_for_existing_file(self):
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.fileName, self.classList)
         self.classList.append("ThisIsNew")
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.fileName, self.classList)
 
         with open(self.unitTestFilePath, "r") as createdFile:
             createdFileContents = createdFile.read()
@@ -273,12 +274,13 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
 class TestFilterExistingClassesFromTestFile(unittest.TestCase):
 
     def setUp(self):
+        self.fileName = "test_functions_test_data.py"
         self.unitTestFilePath = "{}/test_functions_test_data.py".format(CURRENTDIRPATH)
         self.standardRegex = create_tests.regex_switch(commented=False, indented=False)
         functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH),
                                                            self.standardRegex)
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
-        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
+        create_tests.write_new_functions_to_file(self.unitTestFilePath, self.fileName, self.classList)
 
     def tearDown(self):
         os.remove(self.unitTestFilePath)

@@ -72,8 +72,8 @@ def filter_existing_classes_from_test_file(filePath, classList):
     return newClassList
 
 
-def write_new_functions_to_file(filePath, classList):
-    userFileNameImport = re.search(r"tests[\\|\/]test_(.+)\.py", filePath).group(1)
+def write_new_functions_to_file(filePath, fileName, classList):
+    userFileNameImport = re.search(r"test_(.+)\.py", fileName).group(1)
     insertIndex = 0
 
     with open(filePath, "a+") as unitTestFile:
@@ -110,12 +110,20 @@ def write_new_functions_to_file(filePath, classList):
 
 class CreateTests:
 
-    def __init__(self, usersFilePath, testDirectory, serarchCommented, serarchIndented):
-        self.usersFilePath = os.path.abspath(usersFilePath)
+    def __init__(self, targetFilePath, testDirectory, serarchCommented, serarchIndented):
+        self.targetFilePath = os.path.abspath(targetFilePath)
         self.searchRegex = regex_switch(serarchCommented, serarchIndented)
-        self.unittestFilePath = create_unittest_filepath(self.usersFilePath)
-        self.functionLists = find_functions_in_file(self.usersFilePath, self.searchRegex)
+        filePathNameDict = create_unittest_filepath(self.targetFilePath)
+        self.unittestFileName = filePathNameDict["unittestFileName"]
+        self.unittestFilePath = self.file_path_switch(filePathNameDict, testDirectory)
+        self.functionLists = find_functions_in_file(self.targetFilePath, self.searchRegex)
         self.classList = convert_function_name_to_unittest_class_name(self.functionLists)
+
+    def file_path_switch(self, filePathNameDict, testDirectory):
+        if testDirectory:
+            return os.path.join(testDirectory, filePathNameDict["unittestFileName"])
+        else:
+            return os.path.join(filePathNameDict["unittestFilePath"], filePathNameDict["unittestFileName"])
 
     def write_tests(self):
         if os.path.isfile(self.unittestFilePath):
@@ -123,5 +131,5 @@ class CreateTests:
         elif not os.path.exists(os.path.dirname(self.unittestFilePath)):
             os.makedirs(os.path.dirname(self.unittestFilePath))
 
-        write_new_functions_to_file(self.unittestFilePath, self.classList)
+        write_new_functions_to_file(self.unittestFilePath, self.unittestFileName, self.classList)
         self.userMessage = "Wrote {} new function(s) to {}".format(len(self.classList), self.unittestFilePath)
