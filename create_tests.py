@@ -45,7 +45,16 @@ def convert_function_name_to_unittest_class_name(functionList):
     return classList
 
 
-def construct_unittest_filepath_from_users_filepath(filePath):
+def create_unittest_file_name(filePath):
+    fileNameRegex = r"([^\/|\\]+\.py$)"
+
+    targetFileName = re.search(fileNameRegex, filePath).group(0)
+    unittestFileName = "test_{0}".format(targetFileName)
+
+    return unittestFileName
+
+
+def construct_unittest_filepath(filePath):
     def findMatchGroup(matchobj):
         return "{0}tests{0}test_{1}".format(matchobj.group(1), matchobj.group(2))
 
@@ -110,7 +119,7 @@ class CreateTests:
     def __init__(self, usersFilePath, testDirectory, serarchCommented, serarchIndented):
         self.usersFilePath = os.path.abspath(usersFilePath)
         self.searchRegex = regex_switch(serarchCommented, serarchIndented)
-        self.unittestFilePath = construct_unittest_filepath_from_users_filepath(self.usersFilePath)
+        self.unittestFilePath = construct_unittest_filepath(self.usersFilePath)
         self.functionLists = find_functions_in_file(self.usersFilePath, self.searchRegex)
         self.classList = convert_function_name_to_unittest_class_name(self.functionLists)
 
