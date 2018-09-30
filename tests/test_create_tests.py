@@ -194,7 +194,8 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
             "C:\\pythonfile.py",
             "C:\\python file.py",
             "D:\\python_file.py",
-            "/z/pythonflie.py"]
+            "/z/pythonflie.py",
+            "D:\\directory\\python_file.py"]
         expectedOutputList = [
             "C:\\tests\\test_pythonfile.py",
             "C:\\tests\\test_python_file.py",
@@ -202,7 +203,8 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
             "C:\\tests\\test_pythonfile.py",
             "C:\\tests\\test_python file.py",
             "D:\\tests\\test_python_file.py",
-            "/z/tests/test_pythonflie.py"]
+            "/z/tests/test_pythonflie.py",
+            "D:\\directory\\tests\\test_python_file.py"]
 
         for returnedValue in yield_input_expected_output_match(create_tests.construct_unittest_filepath,
                                                                inputList,
