@@ -5,7 +5,7 @@ import sys
 parser = argparse.ArgumentParser(prog="command")
 parser.add_argument("-f", "--file", type=str, required=True,
                     help="File which you want to unittests for")
-parser.add_argument("-d", "--directory", default="___default___",
+parser.add_argument("-d", "--directory", default=False,
                     help="Location to write tests. Default is the target file's directory")
 parser.add_argument("-i", "--indented", action="store_true",
                     help="Also looks for indented functions")
