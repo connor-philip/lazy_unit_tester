@@ -12,14 +12,15 @@ The tool is designed to work on both Windows and Linux.
 ## Usage
 **Syntax:**
 
-**`python lazy.py -f FILE [-i] [-c]`**
+**`python lazy.py -f FILE [-d] [-i] [-c]`**
 
 | Parameter | Description |
 ------------|--------------
-| -f        | Target file to create tests for. Required    |
-| -i        | Include indented functions                   |
-| -c        | Include commented functions                  |
-| -h        | Prints basic help menu                       |
+| -f        | Target file to create tests for.  |
+| -d        | Target directory to create tests. Default is target_file_directory/tests/ |
+| -i        | Include indented functions        |
+| -c        | Include commented functions       |
+| -h        | Prints basic help menu            |
 
 
 
