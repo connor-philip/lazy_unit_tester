@@ -10,7 +10,9 @@ def yield_input_expected_output_match(function, inputList, expectedOutputList):
         if function(item) == expectedOutputList[index]:
             yield (True, "")
         else:
-            yield (False, "return of {}({}) did not match {}".format(function.__name__, item, expectedOutputList[index]))
+            yield (False, "return of {}({}) did not match {}".format(function.__name__,
+                                                                     item,
+                                                                     expectedOutputList[index]))
 
 
 class TestRegexSwitch(unittest.TestCase):
@@ -40,7 +42,8 @@ class TestRegexSwitch(unittest.TestCase):
         self.assertEqual(catchAllRegex, self.catchAllReturn)
 
 
-class TestFindFunctionsInFile(unittest.TestCase):  # Differet types of invalid function names are listed in functions_test_data.txt
+# Differet types of invalid function names are listed in functions_test_data.txt
+class TestFindFunctionsInFile(unittest.TestCase):
 
     def setUp(self):
         self.functions_test_data_file = "{}/functions_test_data.txt".format(CURRENTDIRPATH)
@@ -178,7 +181,9 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
             "C:\\tests\\test_pythonfile.py",
             "/z/tests/test_pythonflie.py"]
 
-        for returnedValue in yield_input_expected_output_match(create_tests.construct_unittest_filepath_from_users_filepath, inputList, expectedOutputList):
+        for returnedValue in yield_input_expected_output_match(create_tests.construct_unittest_filepath_from_users_filepath,
+                                                               inputList,
+                                                               expectedOutputList):
             self.assertTrue(returnedValue[0], msg=returnedValue[1])
 
     def test_function_returns_unittest_filepath_from_valid_input(self):
@@ -199,7 +204,9 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
             "D:\\tests\\test_python_file.py",
             "/z/tests/test_pythonflie.py"]
 
-        for returnedValue in yield_input_expected_output_match(create_tests.construct_unittest_filepath_from_users_filepath, inputList, expectedOutputList):
+        for returnedValue in yield_input_expected_output_match(create_tests.construct_unittest_filepath_from_users_filepath,
+                                                               inputList,
+                                                               expectedOutputList):
             self.assertTrue(returnedValue[0], msg=returnedValue[1])
 
     def test_function_returns_false_from_invalid_input(self):
@@ -208,7 +215,7 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
         self.assertFalse(returnedValue)
 
     def test_function_only_accepts_py_files(self):
-        returnedValue = create_tests.construct_unittest_filepath_from_users_filepath("C:\pythonfile.pie")
+        returnedValue = create_tests.construct_unittest_filepath_from_users_filepath("C:\\pythonfile.pie")
 
         self.assertFalse(returnedValue)
 
@@ -225,7 +232,8 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
         self.unitTestFileFreshBaseline = "{}/test_functions_test_data_fresh_baseline.txt".format(CURRENTDIRPATH)
         self.unitTestFileExistingBaseline = "{}/test_functions_test_data_existing_baseline.txt".format(CURRENTDIRPATH)
         self.standardRegex = create_tests.regex_switch(commented=False, indented=False)
-        functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH), self.standardRegex)
+        functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH),
+                                                           self.standardRegex)
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
 
     def tearDown(self):
@@ -248,7 +256,9 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
             baseLineFileContents = baseLine.read()
             baseLine.close()
 
-        self.assertEqual(createdFileContents, baseLineFileContents, msg="created file did not match baseline, created file;\n{}".format(createdFileContents))
+        self.assertEqual(createdFileContents,
+                         baseLineFileContents,
+                         msg="created file did not match baseline, created file;\n{}".format(createdFileContents))
 
     def test_file_matches_baseline_for_existing_file(self):
         create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
@@ -263,7 +273,9 @@ class TestWriteNewFunctionsToFile(unittest.TestCase):
             baseLineFileContents = baseLine.read()
             baseLine.close()
 
-        self.assertEqual(createdFileContents, baseLineFileContents, msg="created file did not match baseline, created file;\n{}".format(createdFileContents))
+        self.assertEqual(createdFileContents,
+                         baseLineFileContents,
+                         msg="created file did not match baseline, created file;\n{}".format(createdFileContents))
 
 
 class TestFilterExistingClassesFromTestFile(unittest.TestCase):
@@ -271,7 +283,8 @@ class TestFilterExistingClassesFromTestFile(unittest.TestCase):
     def setUp(self):
         self.unitTestFilePath = "{}/test_functions_test_data.py".format(CURRENTDIRPATH)
         self.standardRegex = create_tests.regex_switch(commented=False, indented=False)
-        functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH), self.standardRegex)
+        functionList = create_tests.find_functions_in_file("{}/functions_test_data.txt".format(CURRENTDIRPATH),
+                                                           self.standardRegex)
         self.classList = create_tests.convert_function_name_to_unittest_class_name(functionList)
         create_tests.write_new_functions_to_file(self.unitTestFilePath, self.classList)
 
@@ -279,18 +292,21 @@ class TestFilterExistingClassesFromTestFile(unittest.TestCase):
         os.remove(self.unitTestFilePath)
 
     def test_list_of_functions_returned(self):
-        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
+        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath,
+                                                                            self.classList)
 
         self.assertIsInstance(returnedValue, list)
 
     def test_existing_functions_are_excluded(self):
-        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
+        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath,
+                                                                            self.classList)
 
         self.assertEqual(returnedValue, [])
 
     def test_new_functions_are_included(self):
         self.classList.append("ThisIsNew")
-        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath, self.classList)
+        returnedValue = create_tests.filter_existing_classes_from_test_file(self.unitTestFilePath,
+                                                                            self.classList)
 
         self.assertEqual(returnedValue, ["ThisIsNew"])
 
