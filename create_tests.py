@@ -45,28 +45,19 @@ def convert_function_name_to_unittest_class_name(functionList):
     return classList
 
 
-def create_unittest_file_name(filePath):
-    fileNameRegex = r"([^\/|\\]+\.py$)"
+def create_unittest_filepath(filePath):
+    pathComponentsRegex = r"(.+(?:\/|\\))([^\/|\\]+\.py$)"
 
-    targetFileName = re.search(fileNameRegex, filePath)
+    targetFileName = re.search(pathComponentsRegex, filePath)
     if targetFileName:
-        unittestFileName = "test_{0}".format(targetFileName.group(0))
+        returnDict = {
+            "unittestFilePath": os.path.join(targetFileName.group(1), "tests"),
+            "unittestFileName": "test_{0}".format(targetFileName.group(2))
+        }
     else:
         return False
 
-    return unittestFileName
-
-
-def create_unittest_filepath(filePath):
-    def findMatchGroup(matchobj):
-        return "{0}tests{0}test_{1}".format(matchobj.group(1), matchobj.group(2))
-
-    unittestFilePath = re.sub(r"(\/|\\)([^\/|\\]+\.py$)", findMatchGroup, filePath)
-
-    if unittestFilePath == filePath:  # if path hasn't been updated
-        return False
-
-    return unittestFilePath
+    return returnDict
 
 
 def filter_existing_classes_from_test_file(filePath, classList):

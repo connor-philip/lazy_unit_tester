@@ -173,73 +173,28 @@ class TestConvertFunctionNameToUnittestClassName(unittest.TestCase):
         self.assertEqual(returnedValue, self.expectedReturn)
 
 
-class TestCreateUnittestFileName(unittest.TestCase):
-
-    def test_function_only_accepts_py_files(self):
-        returnedValue1 = create_tests.create_unittest_file_name("C:\\pythonfile.pie")
-
-        self.assertFalse(returnedValue1)
-
-    def test_function_returns_unittest_filepath_from_valid_input(self):
-        inputList = [
-            "C:\\pythonfile.py",
-            "C:\\python_file.py",
-            "C:\\PythonFile.py",
-            "C:\\pythonfile.py",
-            "C:\\python file.py",
-            "D:\\python_file.py",
-            "/z/pythonflie.py",
-            "D:\\directory\\python_file.py"]
-        expectedOutputList = [
-            "test_pythonfile.py",
-            "test_python_file.py",
-            "test_PythonFile.py",
-            "test_pythonfile.py",
-            "test_python file.py",
-            "test_python_file.py",
-            "test_pythonflie.py",
-            "test_python_file.py"]
-
-        for returnedValue in yield_input_expected_output_match(create_tests.create_unittest_file_name,
-                                                               inputList,
-                                                               expectedOutputList):
-            self.assertTrue(returnedValue[0], msg=returnedValue[1])
-
-
 class TestCreateUnittestFilepath(unittest.TestCase):
 
-    def test_function_adds_correct_slashes_for_filepath(self):
-        inputList = [
-            "C:\\pythonfile.py",
-            "/z/pythonflie.py"]
-        expectedOutputList = [
-            "C:\\tests\\test_pythonfile.py",
-            "/z/tests/test_pythonflie.py"]
-
-        for returnedValue in yield_input_expected_output_match(create_tests.create_unittest_filepath,
-                                                               inputList,
-                                                               expectedOutputList):
-            self.assertTrue(returnedValue[0], msg=returnedValue[1])
-
     def test_function_returns_unittest_filepath_from_valid_input(self):
         inputList = [
-            "C:\\pythonfile.py",
-            "C:\\python_file.py",
-            "C:\\PythonFile.py",
-            "C:\\pythonfile.py",
-            "C:\\python file.py",
-            "D:\\python_file.py",
+            "/c/pythonfile.py",
+            "/c/python_file.py",
+            "/c/PythonFile.py",
+            "/c/pythonfile.py",
+            "/c/python file.py",
+            "/d/python_file.py",
             "/z/pythonflie.py",
-            "D:\\directory\\python_file.py"]
+            "/d/directory/python_file.py"]
         expectedOutputList = [
-            "C:\\tests\\test_pythonfile.py",
-            "C:\\tests\\test_python_file.py",
-            "C:\\tests\\test_PythonFile.py",
-            "C:\\tests\\test_pythonfile.py",
-            "C:\\tests\\test_python file.py",
-            "D:\\tests\\test_python_file.py",
-            "/z/tests/test_pythonflie.py",
-            "D:\\directory\\tests\\test_python_file.py"]
+            {'unittestFileName': 'test_pythonfile.py', 'unittestFilePath': '/c/tests'},
+            {'unittestFileName': 'test_python_file.py', 'unittestFilePath': '/c/tests'},
+            {'unittestFileName': 'test_PythonFile.py', 'unittestFilePath': '/c/tests'},
+            {'unittestFileName': 'test_pythonfile.py', 'unittestFilePath': '/c/tests'},
+            {'unittestFileName': 'test_python file.py', 'unittestFilePath': '/c/tests'},
+            {'unittestFileName': 'test_python_file.py', 'unittestFilePath': '/d/tests'},
+            {'unittestFileName': 'test_pythonflie.py', 'unittestFilePath': '/z/tests'},
+            {'unittestFileName': 'test_python_file.py', 'unittestFilePath': '/d/directory/tests'}
+        ]
 
         for returnedValue in yield_input_expected_output_match(create_tests.create_unittest_filepath,
                                                                inputList,
@@ -252,7 +207,7 @@ class TestCreateUnittestFilepath(unittest.TestCase):
         self.assertFalse(returnedValue)
 
     def test_function_only_accepts_py_files(self):
-        returnedValue = create_tests.create_unittest_filepath("C:\\pythonfile.pie")
+        returnedValue = create_tests.create_unittest_filepath("/c/pythonfile.pie")
 
         self.assertFalse(returnedValue)
 
