@@ -172,7 +172,7 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
 
     def test_function_adds_correct_slashes_for_filepath(self):
         inputList = [
-            "C:\pythonfile.py",
+            "C:\\pythonfile.py",
             "/z/pythonflie.py"]
         expectedOutputList = [
             "C:\\tests\\test_pythonfile.py",
@@ -183,12 +183,12 @@ class TestConstructUnittestFilepathFromUsersFilepath(unittest.TestCase):
 
     def test_function_returns_unittest_filepath_from_valid_input(self):
         inputList = [
-            "C:\pythonfile.py",
-            "C:\python_file.py",
-            "C:\PythonFile.py",
-            "C:\pythonfile.py",
-            "C:\python file.py",
-            "D:\python_file.py",
+            "C:\\pythonfile.py",
+            "C:\\python_file.py",
+            "C:\\PythonFile.py",
+            "C:\\pythonfile.py",
+            "C:\\python file.py",
+            "D:\\python_file.py",
             "/z/pythonflie.py"]
         expectedOutputList = [
             "C:\\tests\\test_pythonfile.py",
