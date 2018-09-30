@@ -171,6 +171,39 @@ class TestConvertFunctionNameToUnittestClassName(unittest.TestCase):
         self.assertEqual(returnedValue, self.expectedReturn)
 
 
+class TestCreateUnittestFileName(unittest.TestCase):
+
+    def test_function_only_accepts_py_files(self):
+        returnedValue1 = create_tests.create_unittest_file_name("C:\\pythonfile.pie")
+
+        self.assertFalse(returnedValue1)
+
+    def test_function_returns_unittest_filepath_from_valid_input(self):
+        inputList = [
+            "C:\\pythonfile.py",
+            "C:\\python_file.py",
+            "C:\\PythonFile.py",
+            "C:\\pythonfile.py",
+            "C:\\python file.py",
+            "D:\\python_file.py",
+            "/z/pythonflie.py",
+            "D:\\directory\\python_file.py"]
+        expectedOutputList = [
+            "test_pythonfile.py",
+            "test_python_file.py",
+            "test_PythonFile.py",
+            "test_pythonfile.py",
+            "test_python file.py",
+            "test_python_file.py",
+            "test_pythonflie.py",
+            "test_python_file.py"]
+
+        for returnedValue in yield_input_expected_output_match(create_tests.create_unittest_file_name,
+                                                               inputList,
+                                                               expectedOutputList):
+            self.assertTrue(returnedValue[0], msg=returnedValue[1])
+
+
 class TestCreateUnittestFilepath(unittest.TestCase):
 
     def test_function_adds_correct_slashes_for_filepath(self):

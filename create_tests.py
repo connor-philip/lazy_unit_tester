@@ -48,8 +48,11 @@ def convert_function_name_to_unittest_class_name(functionList):
 def create_unittest_file_name(filePath):
     fileNameRegex = r"([^\/|\\]+\.py$)"
 
-    targetFileName = re.search(fileNameRegex, filePath).group(0)
-    unittestFileName = "test_{0}".format(targetFileName)
+    targetFileName = re.search(fileNameRegex, filePath)
+    if targetFileName:
+        unittestFileName = "test_{0}".format(targetFileName.group(0))
+    else:
+        return False
 
     return unittestFileName
 
