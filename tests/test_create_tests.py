@@ -7,12 +7,14 @@ CURRENTDIRPATH = os.path.dirname(os.path.realpath(__file__))
 
 def yield_input_expected_output_match(function, inputList, expectedOutputList):
     for index, item in enumerate(inputList):
-        if function(item) == expectedOutputList[index]:
+        returnedValue = function(item)
+        if returnedValue == expectedOutputList[index]:
             yield (True, "")
         else:
-            yield (False, "return of {}({}) did not match {}".format(function.__name__,
-                                                                     item,
-                                                                     expectedOutputList[index]))
+            yield (False, "return of {}({}) did not match {}. Got instead:{}".format(function.__name__,
+                                                                                     item,
+                                                                                     expectedOutputList[index],
+                                                                                     returnedValue))
 
 
 class TestRegexSwitch(unittest.TestCase):
